@@ -2,8 +2,8 @@ name: Check TikTok Live
 
 on:
   schedule:
-    - cron: '*/5 * * * *'  # every 5 minutes
-  workflow_dispatch:        # allows manual trigger 
+    - cron: '*/5 * * * *'
+  workflow_dispatch:
 
 jobs:
   check:
@@ -17,7 +17,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: live_state.json
-          key: tiktok-live-state   # fixed key so it always restores the same file
+          key: tiktok-live-state
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -29,14 +29,13 @@ jobs:
 
       - name: Run live check
         env:
-          DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
-          DISCORD_CHANNEL_ID: ${{ secrets.DISCORD_CHANNEL_ID }}
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
           TIKTOK_USERNAME: ${{ secrets.TIKTOK_USERNAME }}
         run: python bot.py
 
       - name: Save live state cache
         uses: actions/cache/save@v4
-        if: always()   # save even if the script errors
+        if: always()
         with:
           path: live_state.json
           key: tiktok-live-state
