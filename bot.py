@@ -36,7 +36,7 @@ async def send_discord_message(content: str, embed: dict = None):
 
 
 async def check_new_post(state: dict) -> dict:
-    feed_url = f"https://rsshub.app/tiktok/user/@{TIKTOK_USERNAME}"
+    feed_url = f"https://rsshub.rss.plus/tiktok/user/@{TIKTOK_USERNAME}"
 
     async with aiohttp.ClientSession() as session:
         async with session.get(feed_url) as resp:
