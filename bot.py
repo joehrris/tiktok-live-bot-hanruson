@@ -48,7 +48,7 @@ async def main():
             "description": f"Jump in now!\n🔗 [Watch here](https://www.tiktok.com/@{TIKTOK_USERNAME}/live)",
             "color": 16711680
         }
-        await send_discord_message("@everyone 📣 Your favorite streamer just went live!", embed)
+        await send_discord_message("📣 Your favorite streamer just went live!", embed)
         write_state({"is_live": True})
 
     elif not currently_live and was_live:
