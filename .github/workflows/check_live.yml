@@ -1,0 +1,42 @@
+name: Check TikTok Live
+
+on:
+  schedule:
+    - cron: '*/5 * * * *'  # every 5 minutes
+  workflow_dispatch:        # allows manual trigger 
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Restore live state cache
+        uses: actions/cache@v4
+        with:
+          path: live_state.json
+          key: tiktok-live-state   # fixed key so it always restores the same file
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run live check
+        env:
+          DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
+          DISCORD_CHANNEL_ID: ${{ secrets.DISCORD_CHANNEL_ID }}
+          TIKTOK_USERNAME: ${{ secrets.TIKTOK_USERNAME }}
+        run: python bot.py
+
+      - name: Save live state cache
+        uses: actions/cache/save@v4
+        if: always()   # save even if the script errors
+        with:
+          path: live_state.json
+          key: tiktok-live-state
