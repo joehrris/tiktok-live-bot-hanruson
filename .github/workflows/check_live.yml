@@ -13,12 +13,6 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Restore live state cache
-        uses: actions/cache@v4
-        with:
-          path: live_state.json
-          key: tiktok-live-state
-
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
@@ -33,9 +27,10 @@ jobs:
           TIKTOK_USERNAME: ${{ secrets.TIKTOK_USERNAME }}
         run: python bot.py
 
-      - name: Save live state cache
-        uses: actions/cache/save@v4
-        if: always()
-        with:
-          path: live_state.json
-          key: tiktok-live-state
+      - name: Commit state file
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add live_state.json
+          git diff --staged --quiet || git commit -m "Update live state"
+          git push
