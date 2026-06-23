@@ -6,7 +6,7 @@ import aiohttp
 from datetime import date
 
 WEBHOOK_URL = os.environ["DISCORD_WEBHOOK_URL"]
-DISCORD_BOT_TOKEN = os.environ["DISCORD_BOT_TOKEN"]
+DISCORD_BOT_TOKEN = os.environ["DISCORD_BOT_TOKEN"].strip()
 DISCORD_GUILD_ID = os.environ["DISCORD_GUILD_ID"]
 STATE_FILE = "live_state.json"
 
