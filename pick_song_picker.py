@@ -68,7 +68,7 @@ async def main():
         "title": "🎵 Today's First Song Picker!",
         "description": (
             f"{mention} has been chosen to pick the **first song** of today's stream!\n\n"
-            "Stream starts at **5:45pm** — get your request ready! 🎶"
+            "Stream is scheduled at **6pm** — get your request ready! 🎶"
         ),
         "color": 5814783,
     }
